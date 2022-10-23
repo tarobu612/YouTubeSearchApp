@@ -1,9 +1,11 @@
 package com.tarobu612.youtubesearchapp.api
 
 import com.tarobu612.youtubesearchapp.util.YOUTUBE_BASE_URL
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class RetrofitInstance {
@@ -18,6 +20,7 @@ class RetrofitInstance {
             Retrofit.Builder()
                 .baseUrl(YOUTUBE_BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .client(client)
                 .build()
         }
